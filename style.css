@@ -1,0 +1,726 @@
+/* This sets the visual constants used across the portfolio. */
+:root {
+    --ink: #070707;
+    --surface: #161616;
+    --line: #303030;
+    --paper: #f0eeee;
+    --muted: #aaa6a6;
+    --accent: #e86a33;
+    --content-width: 1180px;
+}
+
+/* This keeps dimensions predictable throughout the page. */
+* { box-sizing: border-box; }
+
+/* This makes internal navigation glide between sections. */
+html { scroll-behavior: smooth; }
+
+/* This establishes the star-field foundation and readable default typography. */
+body {
+    margin: 0;
+    overflow-x: hidden;
+    color: var(--paper);
+    background: linear-gradient(rgba(5, 5, 5, 0.7), rgba(5, 5, 5, 0.9)),
+    url("images/milky-way.png") center / cover fixed no-repeat,
+    var(--ink);
+    font-family: "Inter", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+}
+
+/* This prevents media from overflowing its container. */
+img { display: block; max-width: 100%; }
+
+/* This keeps links consistent with the portfolio palette. */
+a { color: inherit; }
+
+/* This gives text selection the requested subtle orange portfolio treatment. */
+::selection { color: #fff7f2; background: rgba(232, 106, 51, 0.52); }
+
+/* This keeps Firefox selection styling consistent with other browsers. */
+::-moz-selection { color: #fff7f2; background: rgba(232, 106, 51, 0.52); }
+
+/* This makes keyboard navigation visible. */
+a:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
+
+/* This anchors the page name and initial navigation at the top. */
+.site-header {
+    position: sticky; top: 0; z-index: 30; display: flex; align-items: center; justify-content: space-between;
+    width: 100%; padding: 18px max(32px, calc((100vw - var(--content-width)) / 2));
+    background: rgba(12, 12, 12, 0.96); border-bottom: 1px solid var(--line);
+}
+
+/* This gives the personal wordmark a compact, confident appearance. */
+.site-name { font-size: 14px; font-weight: 600; letter-spacing: -0.02em; text-decoration: none; }
+
+/* This keeps section controls compact at the top of the site. */
+.site-nav { display: flex; gap: 24px; }
+
+/* This styles each navigation control as quiet supporting text. */
+.site-nav a { color: var(--muted); font-size: 14px; text-decoration: none; transition: color 0.2s ease, transform 0.2s ease; }
+
+/* This makes the hovered or current section easy to identify. */
+.site-nav a:hover, .site-nav a.is-active { color: var(--accent); }
+
+/* This turns the navigation into a right-side shortcut after the hero. */
+@media (min-width: 901px) {
+    .site-header.nav-sidebar {
+        position: fixed; top: 50%; right: 22px; left: auto; width: 148px; padding: 16px;
+        background: rgba(14, 14, 14, 0.9); border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 16px 50px rgba(0, 0, 0, 0.28); transform: translateY(-50%); animation: sidebar-arrival 0.35s ease-out;
+    }
+    .site-header.nav-sidebar .site-name { display: none; }
+    .site-header.nav-sidebar .site-nav { align-items: stretch; flex-direction: column; gap: 4px; }
+    .site-header.nav-sidebar .site-nav a { position: relative; padding: 7px 8px 7px 17px; border-radius: 8px; font-size: 13px; }
+    .site-header.nav-sidebar .site-nav a::before { position: absolute; top: 50%; left: 0; width: 5px; height: 5px; background: var(--muted); border-radius: 50%; content: ""; opacity: 0.35; transform: translateY(-50%); transition: background-color 0.2s ease, opacity 0.2s ease, transform 0.2s ease; }
+    .site-header.nav-sidebar .site-nav a:hover { background: rgba(232, 106, 51, 0.08); color: var(--paper); transform: translateX(-3px); }
+    .site-header.nav-sidebar .site-nav a:hover::before, .site-header.nav-sidebar .site-nav a.is-active::before { background: var(--accent); opacity: 1; transform: translateY(-50%) scale(1.4); }
+    .site-header.nav-sidebar .site-nav a.is-active { color: var(--accent); }
+}
+
+/* This brings the sidebar in from the right rather than making it pop in. */
+@keyframes sidebar-arrival { from { opacity: 0; transform: translate(28px, -50%); } to { opacity: 1; transform: translate(0, -50%); } }
+
+/* This keeps every section on a controlled editorial grid. */
+main { width: min(var(--content-width), calc(100% - 64px)); margin: 0 auto; }
+
+/* This creates consistent chapter spacing. */
+section { padding: 108px 0; border-top: 1px solid rgba(255, 255, 255, 0.1); scroll-margin-top: 84px; }
+
+/* This styles shared labels without competing with section headings. */
+.eyebrow, .section-label, .project-type, .achievement-label, .countdown-label {
+    margin: 0; color: var(--muted); font-size: 12px; font-weight: 600; letter-spacing: 0.11em; text-transform: uppercase;
+}
+
+/* This creates the editorial type scale for primary and secondary headings. */
+h1, h2, h3, blockquote {
+    margin: 0; color: var(--paper); font-family: "Newsreader", Georgia, serif; font-weight: 400; letter-spacing: -0.035em; line-height: 1.04;
+}
+
+/* This makes the opening claim appropriately dominant. */
+h1 { max-width: 760px; font-size: clamp(58px, 7.3vw, 100px); }
+
+/* This balances section headings against the large hero line. */
+h2 { max-width: 800px; margin-top: 14px; font-size: clamp(44px, 5vw, 70px); }
+
+/* This supplies a clear hierarchy inside cards. */
+h3 { font-size: clamp(26px, 2.2vw, 32px); }
+
+/* This removes accidental browser paragraph spacing. */
+p { margin: 0; }
+
+/* This builds the opening composition around the main portrait. */
+.hero-section {
+    position: relative; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(330px, 0.75fr); align-items: center;
+    gap: 64px; min-height: 790px; padding-top: 96px; border-top: 0;
+}
+
+/* This prevents any hero child from forcing a wider layout at smaller widths. */
+.hero-section > * { min-width: 0; }
+
+/* This gives the hero descriptor a little lift above the main statement. */
+.hero-copy .eyebrow { margin-bottom: 16px; }
+
+/* This keeps the introduction readable below the statement. */
+.hero-introduction { max-width: 610px; margin-top: 26px; color: #c4c1c1; font-size: 17px; }
+
+/* This gives the main call-to-action a focused visual treatment. */
+.hero-link { display: inline-flex; margin-top: 25px; color: var(--accent); font-size: 14px; font-weight: 600; text-decoration: none; transition: transform 0.2s ease, color 0.2s ease; }
+
+/* This makes the call-to-action feel responsive on hover. */
+.hero-link:hover { color: #ff8956; transform: translateX(5px); }
+
+/* This makes the portrait a clear route to LinkedIn. */
+.hero-photo-link { display: block; text-decoration: none; }
+
+/* This gives the portrait its requested curved rectangle, not an oval. */
+.hero-photo-frame {
+    aspect-ratio: 4 / 5; overflow: hidden; border: 1px solid rgba(232, 106, 51, 0.4); border-radius: 30px 96px 30px 96px;
+    background: var(--surface); box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35); transition: border-color 0.3s ease, transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+/* This holds Shubham and the bougainvillea at a natural visual centre. */
+.hero-photo-frame img { width: 100%; height: 100%; object-fit: cover; object-position: center 54%; transition: transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1); }
+
+/* This confirms the portrait is interactive without overdoing it. */
+.hero-photo-link:hover .hero-photo-frame { border-color: var(--accent); box-shadow: 0 35px 86px rgba(0, 0, 0, 0.58); transform: translateY(-10px) rotate(-0.7deg); }
+
+/* This adds subtle depth to the portrait on hover. */
+.hero-photo-link:hover img { transform: scale(1.045); }
+
+/* This puts the personal quote against the lower edge of the portrait. */
+.hero-quote {
+    position: absolute; right: -10px; bottom: 78px; z-index: 2; width: min(390px, 38vw); padding: 24px 27px;
+    color: var(--paper); background: rgba(24, 24, 24, 0.98); border: 1px solid var(--accent); border-radius: 22px 22px 4px 22px;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.38); font-family: "Newsreader", Georgia, serif; font-size: clamp(20px, 1.7vw, 25px); font-style: normal; letter-spacing: -0.02em; line-height: 1.22;
+}
+
+/* This preserves the deliberate pause between quote lines. */
+.hero-quote p + p { margin-top: 15px; }
+
+/* This gives only the uppercase words their orange emphasis. */
+.hero-quote strong { color: var(--accent); font-weight: 500; letter-spacing: 0.035em; }
+
+/* This keeps section-level blur entrances smooth and restrained. */
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+    will-change: opacity, transform;
+}
+
+/* This restores a section once it reaches the reader. */
+.reveal-on-scroll.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* This applies the same transition language to individual visual units. */
+.reveal-unit {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    will-change: opacity, transform;
+}
+
+
+/* This restores a card once it reaches the reader. */
+.reveal-unit.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* This sets up the story as three equal, readable columns. */
+.story-content, .story-points { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+
+/* This separates story text from its heading. */
+.story-content { margin-top: 46px; }
+
+/* This softens the supporting paragraphs. */
+.story-content p { color: #c2bebe; }
+
+/* This turns the three operating principles into a quiet lower row. */
+.story-points { margin-top: 42px; padding-top: 28px; border-top: 1px solid var(--line); }
+
+/* This keeps story principles light and scannable. */
+.story-points p { color: var(--muted); font-size: 14px; }
+
+/* This gives each principle its orange lead phrase. */
+.story-points span { display: block; margin-bottom: 5px; color: var(--accent); font-weight: 600; }
+
+/* This gives the badminton achievement a wide, intentional treatment. */
+.achievement-card {
+    position: relative; display: flex; align-items: center; justify-content: space-between; gap: 32px; margin-top: 34px; padding: 27px 29px;
+    overflow: visible; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; transition: border-color 0.25s ease, transform 0.25s ease, padding-bottom 0.3s ease;
+}
+
+/* This keeps long achievement text from widening the card. */
+.achievement-card > * { min-width: 0; }
+
+/* This lets the achievement respond as a complete card. */
+.achievement-card:hover { border-color: rgba(232, 106, 51, 0.65); transform: translateY(-4px); }
+
+/* This marks the achievement category in orange. */
+.achievement-label { margin-bottom: 7px; color: var(--accent); }
+
+/* This keeps the description aligned directly with the title. */
+.achievement-card h3 + p { max-width: 760px; margin-top: 9px; color: #cac5c5; }
+
+/* This makes the badminton title a subtle direct route to its certificate. */
+.achievement-title-link { color: inherit; text-decoration: none; transition: color 0.2s ease; }
+
+/* This mirrors the quiet title interaction used for the internship certificates. */
+.achievement-title-link:hover { color: var(--accent); }
+
+/* This styles the explicit full-certificate destination. */
+.certificate-button, .experience-certificate {
+    display: inline-flex; align-items: center; width: max-content; padding: 10px 14px; color: var(--accent); background: rgba(232, 106, 51, 0.07);
+    border: 1px solid rgba(232, 106, 51, 0.48); border-radius: 999px; font-size: 13px; font-weight: 600; text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+/* This gives certificate actions a clear hover response. */
+.certificate-button:hover, .experience-certificate:hover { color: var(--ink); background: var(--accent); transform: translateY(-2px); }
+
+/* This separates the excellence principle from the section heading. */
+.excellence-credo { max-width: 680px; margin-top: 24px; color: #c5c0c0; font-size: 17px; }
+
+/* This highlights excellence without over-emphasising the whole sentence. */
+.excellence-credo strong { color: var(--accent); font-weight: 600; }
+
+/* This lays out strengths in a strong two-column rhythm. */
+.strengths-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 40px; }
+
+/* This provides the stable foundation for each strength. */
+.strength-item { min-height: 252px; padding: 30px; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; transition: border-color 0.25s ease, transform 0.25s ease, background-color 0.25s ease; }
+
+/* This gives the requested strength-card hover a visible but calm response. */
+.strength-item:hover { background: #1c1c1c; border-color: var(--accent); transform: translateY(-7px); }
+
+/* This keeps strength numbers small but easy to locate. */
+.strength-number, .experiment-number, .path-marker { margin-bottom: 42px; color: var(--accent); font-size: 13px; }
+
+/* This gives strength copy comfortable distance from the heading. */
+.strength-item h3 + p { margin-top: 16px; color: var(--muted); }
+
+/* This aligns the Revision Cycle heading and its explicit action. */
+.project-heading { display: flex; align-items: center; justify-content: space-between; gap: 28px; }
+
+/* This maintains a small visual step between project type and title. */
+.project-type { margin-bottom: 12px; }
+
+/* This makes the project title quietly clickable, as requested. */
+.project-title-link { text-decoration: none; transition: color 0.2s ease; }
+
+/* This reveals project-title interactivity only on exploration. */
+.project-title-link:hover { color: var(--accent); }
+
+/* This gives the Revision Cycle destination the same clear button language as certificates. */
+.project-link { flex: 0 0 auto; padding: 10px 14px; color: var(--accent); background: rgba(232, 106, 51, 0.07); border: 1px solid rgba(232, 106, 51, 0.48); border-radius: 999px; font-size: 13px; font-weight: 600; text-decoration: none; transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease; }
+
+/* This gives the project action the same interaction response as certificates. */
+.project-link:hover { color: var(--ink); background: var(--accent); transform: translateY(-2px); }
+
+/* This frames Revision Cycle as two deliberate surfaces, without unused empty space. */
+.project-content { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(310px, 0.8fr); align-items: stretch; gap: 22px; margin-top: 34px; padding: 0; background: transparent; border: 0; }
+
+/* This gives the Revision Cycle dashboard a polished interactive display. */
+.revision-preview { position: relative; display: block; align-self: start; aspect-ratio: 1855 / 920; overflow: hidden; background: #f5f2ed; border: 1px solid #3c313e; border-radius: 26px; text-decoration: none; transition: box-shadow 0.25s ease, transform 0.25s ease; }
+
+/* This presents the actual product interface rather than a generic decorative image. */
+.revision-preview img { width: 100%; height: 100%; object-fit: contain; object-position: center; transition: transform 0.4s ease; }
+
+/* This keeps the live-system label connected to the screenshot itself. */
+.revision-preview span { position: absolute; right: 14px; bottom: 14px; padding: 9px 12px; color: var(--paper); background: rgba(22, 22, 22, 0.9); border: 1px solid rgba(255, 255, 255, 0.22); border-radius: 999px; font-size: 12px; font-weight: 600; }
+
+/* This confirms that the live system is interactive without cropping its UI. */
+.revision-preview:hover { box-shadow: 0 16px 38px rgba(0, 0, 0, 0.26); transform: translateY(-3px); }
+
+/* This creates a deliberate reading column beside the product screenshot. */
+.revision-copy { display: grid; align-content: center; gap: 20px; padding: 34px; background: rgba(22, 22, 22, 0.94); border: 1px solid var(--line); border-radius: 22px; }
+
+/* This reduces the project rationale to a more confident, readable scale. */
+.project-statement { font-family: "Newsreader", Georgia, serif; font-size: clamp(24px, 2.15vw, 31px); letter-spacing: -0.025em; line-height: 1.17; }
+
+/* This adds the emotional reason for the system without overwhelming its use case. */
+.revision-note { color: #c5c0c0; font-size: 14px; }
+
+/* This turns the system's three proof points into one calm horizontal strip. */
+.project-details { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-content: center; gap: 14px; padding-top: 21px; border-top: 1px solid var(--line); }
+
+/* This softens the supporting project detail. */
+.project-details p { min-width: 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
+
+/* This separates the three ideas without turning them into heavy cards. */
+.project-details p + p { padding-left: 14px; border-left: 1px solid var(--line); }
+
+/* This gives labels inside project metadata a visible hierarchy. */
+.project-details span { display: block; margin-bottom: 4px; color: var(--accent); font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+
+/* This separates experience entries without boxing every line of text. */
+.experience-list { margin-top: 42px; }
+
+/* This builds each role as a date and content column. */
+.experience-item { position: relative; display: grid; grid-template-columns: 180px 1fr; gap: 32px; padding: 32px 0; overflow: visible; border-top: 1px solid var(--line); transition: padding-bottom 0.3s ease; }
+
+/* This avoids a doubled separator above the first experience. */
+.experience-item:first-child { border-top: 0; }
+
+/* This makes dates clearly secondary. */
+.experience-date { color: var(--muted); font-size: 13px; }
+
+/* This organises experience copy in a controlled vertical stack. */
+.experience-copy { display: grid; justify-items: start; gap: 10px; }
+
+/* This makes certificate-bearing roles discoverably clickable, like the project title. */
+.experience-title-link { color: inherit; text-decoration: none; transition: color 0.2s ease; }
+
+/* This reveals the certificate destination only when the role title is explored. */
+.experience-title-link:hover { color: var(--accent); }
+
+/* This keeps internship selection proof separate from the main prose. */
+.experience-meta { color: var(--accent); font-size: 13px; }
+
+/* This limits role descriptions to a readable measure. */
+.experience-copy > p:not(.experience-meta) { max-width: 710px; color: #c4c0c0; }
+
+/* This gives internship certificate actions space below the role description. */
+.experience-certificate { margin-top: 8px; }
+
+/* This creates an asymmetric gallery so every experiment can use its own visual language. */
+.experiment-list { display: grid; grid-template-columns: minmax(0, 1.24fr) minmax(300px, 0.76fr); gap: 22px; margin-top: 42px; }
+
+/* This gives each experiment card a refined, stable base. */
+.experiment-item { min-height: 392px; padding: 26px; overflow: hidden; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; transition: border-color 0.25s ease, transform 0.25s ease, background-color 0.25s ease; }
+
+/* This gives ordinary experiment cards an interactive response. */
+.experiment-list > .experiment-item:hover { background: #1c1c1c; border-color: var(--accent); transform: translateY(-6px); }
+
+/* This keeps experiment numbers close to the top of their cards. */
+.experiment-number { margin-bottom: 18px; }
+
+/* This gives ordinary experiment photos a coherent baseline treatment. */
+.experiment-photo { width: 100%; height: 196px; margin-bottom: 18px; object-fit: cover; border-radius: 13px; filter: saturate(0.9) contrast(1.04); transition: filter 0.3s ease, transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1); }
+
+/* This focuses the Class 9 card on the stall and faces, hiding the screenshot controls. */
+.class9-photo { object-position: center 35%; }
+
+/* This keeps both Class 11 founders and the relaunch display in the frame. */
+.class11-photo { object-position: center 34%; }
+
+/* This focuses the stage crop on Shubham rather than ceiling space. */
+.foundation-photo { height: 188px; object-position: center 82%; }
+
+/* This gives brand imagery a deliberate neutral canvas. */
+.brand-logo { width: 100%; height: 170px; margin-bottom: 18px; object-fit: contain; background: #e9e9e9; border-radius: 13px; }
+
+/* This separates an experiment's summary from its title. */
+.experiment-item h3 + p { margin-top: 13px; color: #c2bebe; font-size: 15px; }
+
+/* This makes a practical lesson recognisable at the card's lower edge. */
+.experiment-lesson { margin-top: 18px; color: var(--accent); font-size: 13px; }
+
+/* This turns the Class 9 and Class 11 story into the gallery's leading flip-card. */
+.stall-flip { min-height: 536px; cursor: pointer; perspective: 1400px; }
+
+/* This provides the rotating plane for both stages of the business story. */
+.stall-flip-inner { position: relative; width: 100%; min-height: 536px; transform-style: preserve-3d; transition: transform 0.75s cubic-bezier(0.18, 0.78, 0.22, 1); will-change: transform; }
+
+/* This places both story faces exactly on top of one another. */
+.flip-face { position: absolute; inset: 0; display: grid; grid-template-columns: minmax(198px, 0.86fr) minmax(0, 1fr); grid-template-rows: auto auto auto 1fr auto auto; column-gap: 25px; width: 100%; min-height: 536px; backface-visibility: hidden; -webkit-backface-visibility: hidden; transform-style: preserve-3d; }
+
+/* This declares the initial Class 9 side explicitly for consistent browser rendering. */
+.flip-front { transform: rotateY(0deg) translateZ(1px); }
+
+/* This puts the relaunch on the reverse side. */
+.flip-back { transform: rotateY(180deg) translateZ(1px); }
+
+/* This places the card number beside the photo rather than wasting vertical image room. */
+.stall-flip .experiment-number { grid-column: 2; grid-row: 1; margin-bottom: 22px; }
+
+/* This preserves the entire vertical source photo on both flip faces. */
+.stall-flip .experiment-photo { grid-column: 1; grid-row: 1 / 7; width: 100%; height: 100%; margin: 0; object-fit: cover; background: #0b0b0b; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 22px 42px 22px 42px; }
+
+/* This aligns the title with the first story detail. */
+.stall-flip h3 { grid-column: 2; grid-row: 2; align-self: start; }
+
+/* This lets the explanation use the available reading space beside the portrait. */
+.stall-flip h3 + p { grid-column: 2; grid-row: 3; align-self: start; color: #c7c2c2; }
+
+/* This uses the open space for a compact before-and-after insight. */
+.experiment-shift { grid-column: 2; grid-row: 4; align-self: end; margin: 0; padding: 13px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); color: #d3cdcd; font-size: 12px; line-height: 1.5; }
+
+/* This labels the insight without competing with the main story. */
+.experiment-shift span { display: block; margin-bottom: 4px; color: var(--accent); font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+
+/* This pins the practical lesson to the base of the copy column. */
+.stall-flip .experiment-lesson { grid-column: 2; grid-row: 5; align-self: end; margin-top: 0; }
+
+/* This gives the manual flip instruction a stable closing position. */
+.stall-flip .experiment-action { grid-column: 2; grid-row: 6; align-self: end; margin-top: 12px; }
+
+/* This rotates from Class 9 to Class 11 for hover and manual exploration. */
+.stall-flip.is-flipped .stall-flip-inner { transform: rotateY(180deg); }
+
+/* This gives the visitor a clear instruction for the story interaction. */
+.experiment-action { margin-top: 14px; color: var(--paper); font-size: 13px; font-weight: 600; }
+
+/* This gives the active story card a contained image lift instead of an abrupt crop. */
+.stall-flip:hover .experiment-photo { filter: saturate(1) contrast(1.07); transform: scale(1.025); }
+
+/* This makes Scarnchx a clean, logo-led artefact rather than a generic image card. */
+.brand-experiment { display: grid; align-content: start; min-height: 536px; }
+
+/* This presents Scarnchx as a true profile-style logo, not a stretched banner. */
+.brand-experiment .brand-logo { display: block; width: 230px; height: 230px; margin: 4px auto 28px; padding: 26px; object-fit: contain; object-position: center; background: #080808; border: 1px solid rgba(232, 106, 51, 0.46); border-radius: 50%; box-shadow: 0 0 0 8px rgba(232, 106, 51, 0.07), 0 18px 34px rgba(0, 0, 0, 0.3); }
+
+/* This turns Foundation Day into a photo-led stage moment. */
+.foundation-experiment { position: relative; isolation: isolate; display: grid; grid-column: 1 / -1; grid-template-columns: minmax(0, 1fr) minmax(310px, 0.9fr); grid-template-rows: auto auto auto auto; align-content: center; min-height: 458px; overflow: hidden; border-radius: 24px 58px 24px 58px; }
+
+/* This enlarges the stage image into the entire card rather than a small evidence thumbnail. */
+.foundation-experiment .foundation-photo { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; margin: 0; object-fit: cover; object-position: center 79%; border: 0; border-radius: inherit; filter: saturate(0.82) contrast(1.05) brightness(0.82); }
+
+/* This adds contrast behind the story while leaving the stage visibly alive. */
+.foundation-experiment::before { position: absolute; inset: 0; z-index: 1; background: linear-gradient(90deg, rgba(10, 10, 10, 0.22) 0%, rgba(10, 10, 10, 0.52) 43%, rgba(10, 10, 10, 0.93) 100%); content: ""; }
+
+/* This keeps the stage label and copy in one tight editorial column. */
+.foundation-experiment .experiment-number, .foundation-experiment h3, .foundation-experiment > p:not(.experiment-number):not(.experiment-lesson), .foundation-experiment .experiment-lesson { grid-column: 2; z-index: 2; position: relative; }
+
+/* This gives the stage label breathing room above the headline. */
+.foundation-experiment .experiment-number { grid-row: 1; margin-bottom: 12px; }
+
+/* This stacks the title directly beneath the stage label. */
+.foundation-experiment h3 { grid-row: 2; }
+
+/* This keeps the practical context closely paired with the title. */
+.foundation-experiment > p:not(.experiment-number):not(.experiment-lesson) { grid-row: 3; margin-top: 16px; }
+
+/* This anchors the lesson as the final stage note. */
+.foundation-experiment .experiment-lesson { grid-row: 4; margin-top: 22px; }
+
+/* This makes the education path a more dynamic staggered route. */
+.path-list { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 24px 96px; margin-top: 48px; padding: 24px 0; }
+
+/* This draws the central route linking milestones. */
+.path-list::before { position: absolute; top: 0; bottom: 0; left: 50%; border-left: 1px dashed var(--accent); content: ""; opacity: 0.75; }
+
+/* This gives every milestone its own stable surface. */
+.path-item { position: relative; z-index: 1; padding: 24px; background: var(--surface); border: 1px solid var(--line); border-radius: 17px; transition: border-color 0.2s ease, transform 0.2s ease; }
+
+/* This staggers left-side milestones around the route. */
+.path-item:nth-child(odd) { grid-column: 1; text-align: right; transform: translateX(-18px); }
+
+/* This staggers right-side milestones around the route. */
+.path-item:nth-child(even) { grid-column: 2; transform: translateX(18px); }
+
+/* This gives every timeline item a small response to hover. */
+.path-item:hover { border-color: var(--accent); transform: translateY(-4px); }
+
+/* This provides the connection line for a left-side path item. */
+.path-item:nth-child(odd)::after { position: absolute; top: 50%; right: -49px; width: 48px; border-top: 1px dashed var(--accent); content: ""; }
+
+/* This provides the connection line for a right-side path item. */
+.path-item:nth-child(even)::after { position: absolute; top: 50%; left: -49px; width: 48px; border-top: 1px dashed var(--accent); content: ""; }
+
+/* This keeps path numbers compact and aligned with their cards. */
+.path-marker { margin-bottom: 12px; }
+
+/* This makes milestone details quiet supporting information. */
+.path-item h3 + p { margin-top: 9px; color: var(--muted); font-size: 14px; }
+
+/* This marks the IPMAT destination as the active next step. */
+.path-goal { border-color: var(--accent); }
+
+/* This lets the philosophy section stretch wider than ordinary text. */
+.philosophy-section { max-width: none; }
+
+/* This gives the philosophy room to stand on its own. */
+.philosophy-layout { max-width: 930px; margin-top: 30px; }
+
+/* This makes the philosophy feel substantial without overpowering the rest of the page. */
+blockquote { align-self: center; margin: 0; padding-left: 30px; border-left: 3px solid var(--accent); font-size: clamp(38px, 4vw, 60px); line-height: 1.12; }
+
+/* This gives Kabir's original words respectful separation from the main philosophy. */
+.kabir-quote { max-width: 780px; margin-top: 46px; color: var(--paper); font-family: "Newsreader", Georgia, serif; font-size: clamp(22px, 2.35vw, 31px); line-height: 1.35; }
+
+/* This softens the English translation. */
+.kabir-meaning { max-width: 670px; margin-top: 10px; color: var(--muted); }
+
+/* This gives the Kabir quote an explicit respectful sign-off. */
+.kabir-credit { margin-top: 7px; color: var(--accent); font-family: "Newsreader", Georgia, serif; font-size: 17px; }
+
+/* This combines the moving manifesto with its mountain visual. */
+.manifesto-layout { display: grid; grid-template-columns: minmax(0, 1.14fr) minmax(310px, 0.86fr); align-items: stretch; gap: 30px; margin-top: 30px; }
+
+/* This gives the typed personal manifesto a distinct voice. */
+.manifesto { display: grid; align-content: center; gap: 13px; min-height: 330px; padding: 36px; background: rgba(22, 22, 22, 0.84); border: 1px solid var(--line); border-radius: 20px; color: var(--accent); font-family: "Newsreader", Georgia, serif; font-size: clamp(23px, 2.3vw, 33px); line-height: 1.22; }
+
+/* This reserves stable line space while the text types in. */
+.manifesto p { min-height: 1.25em; margin: 0; }
+
+/* This gives only the active typing line a living cursor. */
+.manifesto p.is-typing::after { margin-left: 3px; color: var(--paper); content: "|"; animation: typing-blink 0.7s step-end infinite; }
+
+/* This makes the typing cursor blink softly. */
+@keyframes typing-blink { 50% { opacity: 0; } }
+
+/* This gives the mountain view the same two-layer motion system as the hero portrait. */
+.manifesto-photo-frame { justify-self: start; align-self: center; width: min(100%, 420px); height: 480px; overflow: hidden; border: 1px solid rgba(232, 106, 51, 0.4); border-radius: 72px 20px 72px 20px; box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35); transition: border-color 0.3s ease, transform 0.35s ease, box-shadow 0.35s ease; }
+
+/* This keeps the mountain view fully framed before the hover response begins. */
+.manifesto-photo { width: 100%; height: 100%; object-fit: cover; object-position: center; filter: saturate(0.84) contrast(1.05); transition: transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.35s ease; }
+
+/* This exactly mirrors the portrait frame's lift, turn, border, and shadow. */
+.manifesto-photo-frame:hover { border-color: var(--accent); box-shadow: 0 35px 86px rgba(0, 0, 0, 0.58); transform: translateY(-10px) rotate(-0.7deg); }
+
+/* This creates the same quiet depth zoom inside the lifted frame. */
+.manifesto-photo-frame:hover .manifesto-photo { filter: saturate(1) contrast(1.06); transform: scale(1.045); }
+
+/* This provides a quieter final philosophy line. */
+.philosophy-closing { max-width: 680px; margin-top: 28px; color: #bdb8b8; }
+
+/* This gives the contact chapter label the same outside-the-card rhythm as the final note. */
+.contact-label { margin-bottom: 30px; }
+
+/* This carries the contact card to the mountain image alignment while clearing the floating navigation. */
+.contact-section { display: grid; grid-template-columns: 286px minmax(0, 1fr); grid-template-rows: auto 1fr; align-items: stretch; width: min(1120px, calc(100% - 120px)); min-height: 330px; margin: 0 auto 0 0; padding: 18px; column-gap: 38px; row-gap: 0; background: rgba(24, 24, 24, 0.94); border: 1px solid var(--line); border-radius: 28px 78px 28px 28px; }
+
+/* This wider frame trims only the source's top and bottom black strips, never its side edges. */
+.contact-photo-link { grid-column: 1; grid-row: 1 / 3; position: relative; display: block; align-self: center; aspect-ratio: 1.14 / 1; min-height: 0; overflow: hidden; background: var(--surface); border: 1px solid rgba(232, 106, 51, 0.4); border-radius: 18px 48px 18px 18px; box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35); text-decoration: none; transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease; }
+
+/* This preserves the full bicycle composition; only the frame corners mask the image. */
+.contact-photo-link img { width: 100%; height: 100%; object-fit: cover; object-position: center; filter: saturate(0.92) contrast(1.04); transform: none; }
+
+/* This uses a simple button-like lift without altering the image crop or scale. */
+.contact-photo-link:hover { border-color: var(--accent); box-shadow: 0 28px 74px rgba(0, 0, 0, 0.42); transform: translateY(-2px); }
+
+/* This anchors the headline at the start of the right-hand conversation column. */
+.contact-title { grid-column: 2; grid-row: 1; align-self: start; padding-top: 7px; }
+
+/* This gives the closing invitation presence without recreating the old oversized card. */
+.contact-title h2 { margin-top: 8px; font-size: clamp(48px, 4.7vw, 64px); }
+
+/* This gives the middle line and actions their own vertical rhythm. */
+.contact-content { grid-column: 2; grid-row: 2; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; min-height: 0; gap: 32px; padding: 14px 0 6px; }
+
+/* This keeps contact copy on a useful readable line length. */
+.contact-content > p { max-width: 610px; color: #d1cccc; font-size: 18px; }
+
+/* This arranges each contact route as an equal, clear action. */
+.contact-links { display: flex; flex-wrap: wrap; gap: 10px; width: 100%; }
+
+/* This uses the same calm orange-outline treatment as the certificate actions. */
+.contact-links a { display: inline-flex; align-items: center; gap: 7px; width: max-content; min-height: 0; padding: 10px 14px; color: var(--accent); background: rgba(232, 106, 51, 0.07); border: 1px solid rgba(232, 106, 51, 0.48); border-radius: 999px; font-size: 13px; font-weight: 600; text-decoration: none; transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease; }
+
+/* This makes a contact route confirm its clickability in the same way as certificates. */
+.contact-links a:hover { color: var(--ink); background: var(--accent); border-color: var(--accent); transform: translateY(-2px); }
+
+/* This lets the contact arrows inherit each action's normal and hover colours. */
+.contact-links b { color: currentColor; font-size: 13px; font-weight: 500; }
+
+/* This reserves capitals for the IIMB identity while keeping the route human and informal. */
+.contact-links strong { font-size: 0.94em; letter-spacing: 0.06em; }
+
+
+/* This makes the footer a three-point navigation line. */
+.site-footer { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; width: min(var(--content-width), calc(100% - 64px)); margin: 0 auto; padding: 34px 0 42px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+
+/* This anchors the IPMAT timer to the left. */
+.countdown-wrap { position: relative; justify-self: start; }
+
+/* This gives the live countdown a clearer serif character. */
+.ipmat-countdown { display: block; color: var(--accent); font-family: "Newsreader", Georgia, serif; font-size: 22px; white-space: nowrap; }
+
+/* This hides the countdown explanation until the timer is explored. */
+.countdown-tooltip { position: absolute; bottom: calc(100% + 12px); left: 0; width: 235px; padding: 10px 12px; color: var(--paper); background: var(--surface); border: 1px solid var(--accent); border-radius: 10px; font-size: 12px; line-height: 1.4; opacity: 0; pointer-events: none; transform: translateY(7px); transition: opacity 0.2s ease, transform 0.2s ease; }
+
+/* This reveals the IPMAT context on timer hover. */
+.countdown-wrap:hover .countdown-tooltip { opacity: 1; transform: translateY(0); }
+
+/* This centres the handwritten personal closing. */
+.footer-signature { justify-self: center; margin: 0; padding: 0; color: #ff684b; background: transparent; border: 0; cursor: pointer; font-family: "Caveat", cursive; font-size: 32px; font-weight: 600; letter-spacing: 0.01em; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 7px; }
+
+/* This keeps the Instagram image route visually transparent until it is explored. */
+.manifesto-photo-link { display: block; justify-self: start; text-decoration: none; }
+
+/* This hosts the rapid heart burst without blocking any page interaction. */
+.heart-burst { position: fixed; inset: 0; z-index: 100; overflow: hidden; pointer-events: none; }
+
+/* This is one fast, translucent heart in the love easter egg. */
+.heart-particle { position: absolute; top: 50%; left: 50%; color: var(--heart-color); font-size: var(--heart-size); line-height: 1; opacity: 0; text-shadow: 0 0 18px color-mix(in srgb, var(--heart-color), transparent 45%); transform: translate(-50%, -50%); animation: heart-erupt 1.35s cubic-bezier(0.16, 0.8, 0.22, 1) forwards; }
+
+/* This sends hearts rapidly across the visible screen like a small celebration. */
+@keyframes heart-erupt { 0% { opacity: 0; transform: translate(-50%, -50%) scale(0.25) rotate(0deg); } 14% { opacity: 0.85; } 100% { opacity: 0; transform: translate(calc(-50% + var(--heart-x)), calc(-50% + var(--heart-y))) scale(1.2) rotate(var(--heart-rotate)); } }
+
+/* This keeps back-to-top at the footer's right edge. */
+.site-footer > a { justify-self: end; color: var(--muted); text-decoration: none; transition: color 0.2s ease, transform 0.2s ease; }
+
+/* This makes the back-to-top action feel like an action. */
+.site-footer > a:hover { color: var(--accent); transform: translateY(-3px); }
+
+/* This keeps the full navigation touch-friendly on laptops where a sidebar would crowd the content. */
+@media (max-width: 1100px) {
+    .site-header { align-items: flex-start; flex-direction: column; gap: 10px; padding: 15px max(24px, calc((100vw - var(--content-width)) / 2)); }
+    .site-nav { width: 100%; flex-wrap: wrap; gap: 7px 17px; }
+}
+
+/* This prevents the desktop rail treatment from colliding with compact laptop layouts. */
+@media (min-width: 901px) and (max-width: 1100px) {
+    .site-header.nav-sidebar { position: sticky; top: 0; right: auto; left: auto; width: 100%; padding: 15px max(24px, calc((100vw - var(--content-width)) / 2)); background: rgba(12, 12, 12, 0.96); border: 0; border-bottom: 1px solid var(--line); border-radius: 0; box-shadow: none; transform: none; animation: none; }
+    .site-header.nav-sidebar .site-name { display: block; }
+    .site-header.nav-sidebar .site-nav { align-items: flex-start; flex-direction: row; gap: 7px 17px; }
+    .site-header.nav-sidebar .site-nav a { padding: 0; border-radius: 0; font-size: 14px; }
+    .site-header.nav-sidebar .site-nav a::before { display: none; }
+    .site-header.nav-sidebar .site-nav a:hover { background: transparent; color: var(--accent); transform: none; }
+}
+
+/* This adapts the main compositions to tablets and narrow laptops. */
+@media (max-width: 900px) {
+    .hero-section, .manifesto-layout, .contact-section { grid-template-columns: 1fr; }
+    .hero-section { min-height: auto; padding-top: 70px; padding-bottom: 62px; }
+    .hero-photo-link { width: min(500px, 100%); }
+    .hero-quote { position: static; width: min(520px, 92%); margin: -78px 0 0 auto; }
+    .project-content { grid-template-columns: 1fr; gap: 30px; }
+    .manifesto-photo-frame { width: min(100%, 520px); height: min(520px, 100vw); }
+    .contact-section { grid-template-columns: minmax(220px, 0.72fr) 1fr; width: 100%; margin-right: 0; column-gap: 28px; }
+}
+
+/* This changes multi-column editorial sections before they become cramped on small tablets. */
+@media (max-width: 760px) {
+    .story-content, .story-points, .strengths-list, .experiment-list, .path-list { grid-template-columns: 1fr; }
+    .story-content, .story-points { gap: 20px; }
+    .project-details { grid-template-columns: 1fr; gap: 12px; }
+    .project-details p + p { padding-top: 12px; padding-left: 0; border-top: 1px solid var(--line); border-left: 0; }
+    .experiment-list { gap: 18px; }
+    .brand-experiment { min-height: 420px; }
+    .foundation-experiment { grid-column: auto; grid-template-columns: 1fr; min-height: 450px; padding: 30px 24px; }
+    .foundation-experiment::before { background: linear-gradient(0deg, rgba(10, 10, 10, 0.96) 0%, rgba(10, 10, 10, 0.6) 60%, rgba(10, 10, 10, 0.28) 100%); }
+    .foundation-experiment .experiment-number, .foundation-experiment h3, .foundation-experiment > p:not(.experiment-number):not(.experiment-lesson), .foundation-experiment .experiment-lesson { grid-column: 1; }
+    .path-list { gap: 16px; padding-left: 22px; }
+    .path-list::before { left: 4px; }
+    .path-item:nth-child(odd), .path-item:nth-child(even) { grid-column: 1; text-align: left; transform: none; }
+    .path-item:hover { transform: none; }
+    .path-item::after { display: none; }
+    .contact-section { grid-template-columns: 1fr; grid-template-rows: auto; gap: 24px; width: 100%; min-height: 0; }
+    .contact-photo-link, .contact-title, .contact-content { grid-column: auto; grid-row: auto; }
+    .contact-photo-link { justify-self: start; width: min(100%, 390px); }
+    .contact-content { min-height: 0; padding: 0; }
+    .site-footer { display: flex; align-items: center; flex-direction: column; gap: 20px; text-align: center; }
+    .countdown-wrap, .footer-signature, .site-footer > a { justify-self: auto; }
+    .countdown-tooltip { left: 50%; transform: translate(-50%, 7px); }
+    .countdown-wrap:hover .countdown-tooltip { transform: translate(-50%, 0); }
+}
+
+/* This gives the layout a focused mobile reading flow. */
+@media (max-width: 640px) {
+    body { background-attachment: scroll; }
+    .site-header { align-items: flex-start; flex-direction: column; gap: 10px; padding: 15px 20px; }
+    .site-nav { width: 100%; flex-wrap: wrap; justify-content: flex-start; gap: 6px 15px; }
+    main, .site-footer { width: calc(100% - 40px); max-width: var(--content-width); }
+    section { padding: 74px 0; }
+    h1 { font-size: clamp(52px, 15vw, 74px); }
+    h2 { font-size: clamp(39px, 12vw, 55px); }
+    .hero-section { gap: 38px; padding-top: 65px; padding-bottom: 110px; }
+    .hero-copy, .hero-introduction, .hero-quote, .achievement-card h3 { overflow-wrap: anywhere; }
+    .hero-quote { position: static; width: auto; margin-top: -104px; font-size: 21px; }
+    .story-content, .story-points, .strengths-list, .experiment-list { grid-template-columns: 1fr; }
+    .story-content, .story-points { gap: 20px; }
+    .achievement-card { align-items: flex-start; flex-direction: column; }
+    .project-heading { align-items: flex-start; flex-direction: column; }
+    .project-content { padding: 27px; }
+    .project-details { grid-template-columns: 1fr; gap: 12px; }
+    .project-details p + p { padding-left: 0; border-top: 1px solid var(--line); border-left: 0; padding-top: 12px; }
+    .experience-item { grid-template-columns: 1fr; gap: 10px; }
+    .stall-flip, .stall-flip-inner, .flip-face { min-height: 760px; }
+    .flip-face { grid-template-columns: 1fr; grid-template-rows: auto 320px auto auto 1fr auto auto; row-gap: 14px; }
+    .stall-flip .experiment-number { grid-column: 1; grid-row: 1; margin-bottom: 0; }
+    .stall-flip .experiment-photo { grid-column: 1; grid-row: 2; height: 320px; }
+    .stall-flip h3 { grid-column: 1; grid-row: 3; }
+    .stall-flip h3 + p { grid-column: 1; grid-row: 4; }
+    .experiment-shift { grid-column: 1; grid-row: 5; align-self: start; }
+    .stall-flip .experiment-lesson { grid-column: 1; grid-row: 6; }
+    .stall-flip .experiment-action { grid-column: 1; grid-row: 7; }
+    .brand-experiment { min-height: 430px; }
+    .foundation-experiment { grid-column: auto; grid-template-columns: 1fr; min-height: 480px; padding: 30px 24px; }
+    .foundation-experiment::before { background: linear-gradient(0deg, rgba(10, 10, 10, 0.96) 0%, rgba(10, 10, 10, 0.6) 60%, rgba(10, 10, 10, 0.28) 100%); }
+    .foundation-experiment .experiment-number, .foundation-experiment h3, .foundation-experiment > p:not(.experiment-number):not(.experiment-lesson), .foundation-experiment .experiment-lesson { grid-column: 1; }
+    .path-list { grid-template-columns: 1fr; gap: 16px; padding-left: 22px; }
+    .path-list::before { left: 4px; }
+    .path-item:nth-child(odd), .path-item:nth-child(even) { grid-column: 1; text-align: left; transform: none; }
+    .path-item:hover { transform: none; }
+    .path-item::after { display: none; }
+    blockquote { padding-left: 20px; font-size: clamp(37px, 11vw, 52px); }
+    .manifesto { min-height: 290px; padding: 27px; }
+    .contact-section { grid-template-columns: 1fr; grid-template-rows: auto; width: 100%; gap: 25px; min-height: 0; padding: 22px; border-radius: 24px 52px 24px 24px; }
+    .contact-photo-link, .contact-title, .contact-content { grid-column: auto; grid-row: auto; }
+    .contact-photo-link { min-height: 285px; }
+    .contact-content { min-height: 150px; padding: 0; }
+    .site-footer { display: flex; align-items: center; flex-direction: column; gap: 20px; padding: 30px 0 38px; text-align: center; }
+    .countdown-wrap, .footer-signature, .site-footer > a { justify-self: auto; }
+    .countdown-tooltip { left: 50%; transform: translate(-50%, 7px); }
+    .countdown-wrap:hover .countdown-tooltip { transform: translate(-50%, 0); }
+}
+
+/* This respects visitors who prefer less motion. */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Viewer | Shubham Sharma</title>
+    <link rel="icon" type="image/png" href="images/bougainvillea-portrait.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #090909;
+            --paper: #f0eeee;
+            --muted: #aaa6a6;
+            --line: #303030;
+            --accent: #e86a33;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            color: var(--paper);
+            background: #090909;
+            font-family: "Inter", Arial, sans-serif;
+        }
+
+        .viewer-header {
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 24px;
+            background: rgba(9, 9, 9, 0.93);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .viewer-title {
+            margin: 0;
+            font-family: "Newsreader", Georgia, serif;
+            font-size: 24px;
+            font-weight: 400;
+        }
+
+        .viewer-note {
+            margin: 3px 0 0;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .viewer-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .zoom-control {
+            width: 34px;
+            height: 34px;
+            padding: 0;
+            color: var(--paper);
+            background: #171717;
+            border: 1px solid var(--line);
+            border-radius: 50%;
+            cursor: pointer;
+            font: inherit;
+            font-size: 18px;
+            transition: border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+        }
+
+        .zoom-control:hover { color: var(--accent); border-color: var(--accent); transform: translateY(-2px); }
+
+        .zoom-level {
+            min-width: 45px;
+            color: var(--muted);
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .viewer-back {
+            padding: 9px 13px;
+            color: var(--accent);
+            background: transparent;
+            border: 1px solid rgba(232, 106, 51, 0.52);
+            border-radius: 999px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .viewer-stage {
+            width: 100vw;
+            height: 100vh;
+            padding: 88px 24px 28px;
+            overflow: auto;
+            cursor: grab;
+            scrollbar-color: var(--line) var(--ink);
+        }
+
+        .viewer-canvas {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: max-content;
+            min-width: 100%;
+            min-height: 100%;
+            padding: 22px;
+        }
+
+        .viewer-image {
+            display: block;
+            max-width: none;
+            width: auto;
+            height: auto;
+            background: #f7f4ef;
+            border-radius: 8px;
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+            cursor: grab;
+            transition: width 0.2s ease, box-shadow 0.2s ease;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        .viewer-stage.is-dragging, .viewer-stage.is-dragging .viewer-image { cursor: grabbing; }
+
+        @media (max-width: 720px) {
+            .viewer-header { align-items: flex-start; flex-wrap: wrap; gap: 10px; padding: 14px 16px; }
+            .viewer-actions { width: 100%; flex-wrap: wrap; }
+            .viewer-stage { padding: 142px 14px 20px; }
+            .viewer-note { display: none; }
+            .viewer-back { padding: 8px 10px; font-size: 12px; }
+        }
+
+        @media (max-width: 420px) {
+            .viewer-header { padding: 12px; }
+            .viewer-title { font-size: 19px; }
+            .viewer-actions { gap: 6px; }
+            .zoom-control { width: 32px; height: 32px; }
+            .zoom-level { min-width: 38px; }
+            .viewer-stage { padding: 132px 12px 16px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="viewer-header">
+        <div>
+            <h1 class="viewer-title" id="viewer-title">Certificate</h1>
+            <p class="viewer-note">use + / − to zoom · drag to move · Ctrl + scroll also zooms</p>
+        </div>
+        <div class="viewer-actions" aria-label="Certificate zoom controls">
+            <button class="zoom-control" id="zoom-out" type="button" aria-label="Zoom out">−</button>
+            <span class="zoom-level" id="zoom-level">100%</span>
+            <button class="zoom-control" id="zoom-in" type="button" aria-label="Zoom in">+</button>
+            <button class="viewer-back" id="zoom-reset" type="button">fit to screen</button>
+            <a class="viewer-back" href="index.html">back ↗</a>
+        </div>
+    </header>
+
+    <main class="viewer-stage">
+        <div class="viewer-canvas">
+            <img class="viewer-image" id="certificate-image" alt="Certificate">
+        </div>
+    </main>
+
+    <script>
+        const certificates = {
+            badminton: {
+                title: "District-level badminton · third place",
+                image: "images/badminton-certificate.jpg"
+            },
+            uniquelaw: {
+                title: "UniqueLaw.in · certificate of selection",
+                image: "images/internship-certificate-1.png"
+            },
+            best7product: {
+                title: "Best7product · certificate of selection",
+                image: "images/internship-certificate-2.png"
+            }
+        };
+
+        const certificateKey = new URLSearchParams(window.location.search).get("certificate");
+        const certificate = certificates[certificateKey] || certificates.badminton;
+        const image = document.querySelector("#certificate-image");
+        const stage = document.querySelector(".viewer-stage");
+        const zoomLevel = document.querySelector("#zoom-level");
+        let baseWidth = 0;
+        let zoom = 1;
+        let dragStart = null;
+
+        document.title = `${certificate.title} | Shubham Sharma`;
+        document.querySelector("#viewer-title").textContent = certificate.title;
+        image.src = certificate.image;
+        image.alt = certificate.title;
+
+        function fitCertificate() {
+            const availableWidth = Math.max(stage.clientWidth - 80, 260);
+            const availableHeight = Math.max(stage.clientHeight - 80, 260);
+            const fitScale = Math.min(availableWidth / image.naturalWidth, availableHeight / image.naturalHeight, 1);
+            baseWidth = Math.round(image.naturalWidth * fitScale);
+            zoom = 1;
+            updateZoom();
+        }
+
+        function updateZoom() {
+            const displayedWidth = Math.round(baseWidth * zoom);
+            image.style.width = `${displayedWidth}px`;
+            zoomLevel.textContent = `${Math.round(zoom * 100)}%`;
+        }
+
+        function changeZoom(amount) {
+            zoom = Math.min(3, Math.max(0.45, Number((zoom + amount).toFixed(2))));
+            updateZoom();
+        }
+
+        image.addEventListener("load", fitCertificate);
+        window.addEventListener("resize", fitCertificate);
+        document.querySelector("#zoom-in").addEventListener("click", () => changeZoom(0.15));
+        document.querySelector("#zoom-out").addEventListener("click", () => changeZoom(-0.15));
+        document.querySelector("#zoom-reset").addEventListener("click", fitCertificate);
+
+        stage.addEventListener("wheel", (event) => {
+            if (!event.ctrlKey) return;
+            event.preventDefault();
+            changeZoom(event.deltaY < 0 ? 0.1 : -0.1);
+        }, { passive: false });
+
+        stage.addEventListener("pointerdown", (event) => {
+            if (zoom <= 1 || event.button !== 0) return;
+            dragStart = { x: event.clientX, y: event.clientY, left: stage.scrollLeft, top: stage.scrollTop };
+            stage.classList.add("is-dragging");
+            stage.setPointerCapture(event.pointerId);
+        });
+
+        stage.addEventListener("pointermove", (event) => {
+            if (!dragStart) return;
+            stage.scrollLeft = dragStart.left - (event.clientX - dragStart.x);
+            stage.scrollTop = dragStart.top - (event.clientY - dragStart.y);
+        });
+
+        function stopDragging() {
+            dragStart = null;
+            stage.classList.remove("is-dragging");
+        }
+
+        stage.addEventListener("pointerup", stopDragging);
+        stage.addEventListener("pointercancel", stopDragging);
+
+        document.addEventListener("contextmenu", (event) => event.preventDefault());
+        document.addEventListener("dragstart", (event) => event.preventDefault());
+        document.addEventListener("selectstart", (event) => event.preventDefault());
+    </script>
+</body>
+</html>
