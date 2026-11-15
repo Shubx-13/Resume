@@ -20,7 +20,7 @@ IMAGES = {
 
 def convert(source_name: str, quality: int) -> None:
     source = ROOT / "images" / source_name
-    destination = source.with_name(f"{source.stem}-test.webp")
+    destination = source.with_suffix(".webp")
     with Image.open(source) as opened:
         image = ImageOps.exif_transpose(opened).convert("RGB")
         image.save(destination, "WEBP", quality=quality, method=6)
