@@ -186,7 +186,7 @@ function typeManifestoLine(lineIndex) {
     }, 19);
 }
 
-// This waits to clear lines until the manifesto is actually about to be read.
+// This waits until the note's actual text has reached the visitor's reading area.
 const manifestoObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
         if (entry.isIntersecting && !manifestoHasStarted) {
@@ -200,14 +200,24 @@ const manifestoObserver = new IntersectionObserver((entries) => {
         }
     });
 }, {
-    rootMargin: "0px 0px -20% 0px",
-    threshold: 0.15
+    rootMargin: "0px 0px -45% 0px",
+    threshold: 0
 });
 
 // This starts watching the manifesto only when it exists on the page.
 const manifesto = document.querySelector(".manifesto");
 if (manifesto) {
     manifestoObserver.observe(manifesto);
+}
+
+// This makes the footer control reliably return to the top even when hash navigation is interrupted.
+const backToTop = document.querySelector("#back-to-top");
+if (backToTop) {
+    backToTop.addEventListener("click", (event) => {
+        event.preventDefault();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        window.history.replaceState(null, "", "#top");
+    });
 }
 
 // This turns the footer signature into a short, celebratory route back to the top.
