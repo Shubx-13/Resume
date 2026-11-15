@@ -443,10 +443,13 @@ p { margin: 0; }
 .foundation-experiment .foundation-photo { width: 100%; height: 100%; margin: 0; object-fit: cover; object-position: center 79%; border: 0; border-radius: inherit; filter: saturate(0.82) contrast(1.05) brightness(0.82); }
 
 /* This adds contrast behind the story while leaving the stage visibly alive. */
-.foundation-experiment::before { position: absolute; inset: 0; z-index: 2; background: linear-gradient(90deg, rgba(10, 10, 10, 0.22) 0%, rgba(10, 10, 10, 0.52) 43%, rgba(10, 10, 10, 0.93) 100%); content: ""; }
+.foundation-experiment::before { position: absolute; inset: 0; z-index: 2; background: linear-gradient(90deg, rgba(10, 10, 10, 0.22) 0%, rgba(10, 10, 10, 0.52) 43%, rgba(10, 10, 10, 0.93) 100%); content: ""; pointer-events: none; }
 
 /* This keeps the stage label and copy in one tight editorial column. */
 .foundation-experiment .experiment-number, .foundation-experiment h3, .foundation-experiment > p:not(.experiment-number):not(.experiment-lesson), .foundation-experiment .experiment-lesson { grid-column: 2; z-index: 3; position: relative; }
+
+/* This lets the visible Foundation Day image, including its text overlay, remain one clear route to the project PDF. */
+.foundation-experiment .experiment-number, .foundation-experiment h3, .foundation-experiment > p:not(.experiment-number):not(.experiment-lesson), .foundation-experiment .experiment-lesson { pointer-events: none; }
 
 /* This gives the stage label breathing room above the headline. */
 .foundation-experiment .experiment-number { grid-row: 1; margin-bottom: 12px; }
